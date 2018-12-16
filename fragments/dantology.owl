@@ -1,0 +1,194 @@
+Prefix(:=<http://cc.datafabric/dantology/>)
+Prefix(owl:=<http://www.w3.org/2002/07/owl#>)
+Prefix(rdf:=<http://www.w3.org/1999/02/22-rdf-syntax-ns#>)
+Prefix(xml:=<http://www.w3.org/XML/1998/namespace>)
+Prefix(xsd:=<http://www.w3.org/2001/XMLSchema#>)
+Prefix(rdfs:=<http://www.w3.org/2000/01/rdf-schema#>)
+
+
+Ontology(<http://cc.datafabric/dantology/>
+
+Declaration(Class(:Algorithm))
+Declaration(Class(:AlgorithmA_LS_UL))
+Declaration(Class(:AlgorithmB_MS))
+Declaration(Class(:AlgorithmByLearningModel))
+Declaration(Class(:AlgorithmBySize))
+Declaration(Class(:AlgorithmC_SMS))
+Declaration(Class(:AlgorithmD_LS_RL))
+Declaration(Class(:ConcreteAlgorithm))
+Declaration(Class(:LargeSample))
+Declaration(Class(:LargeSampleAlgorithm))
+Declaration(Class(:MediumSample))
+Declaration(Class(:MediumSampleAlgorithm))
+Declaration(Class(:ReinforcementLearningAlgorithm))
+Declaration(Class(:Sample))
+Declaration(Class(:SampleBySize))
+Declaration(Class(:SmallSample))
+Declaration(Class(:SmallSampleAlgorithm))
+Declaration(Class(:Solution))
+Declaration(Class(:SupervisedLearningAlgorithm))
+Declaration(Class(:UnsupervisedLearningAlgorithm))
+Declaration(ObjectProperty(:hasSample))
+Declaration(DataProperty(:hasLabeledValues))
+Declaration(DataProperty(:hasReinforcementFunction))
+Declaration(DataProperty(:hasSize))
+Declaration(NamedIndividual(:largeSample))
+Declaration(NamedIndividual(:mediumSample))
+Declaration(NamedIndividual(:smallSample))
+Declaration(NamedIndividual(:solutionForLargeSample))
+Declaration(NamedIndividual(:solutionForMediumSample))
+Declaration(NamedIndividual(:solutionForSmallSample))
+############################
+#   Object Properties
+############################
+
+# Object Property: :hasSample (:hasSample)
+
+FunctionalObjectProperty(:hasSample)
+
+
+############################
+#   Data Properties
+############################
+
+# Data Property: :hasLabeledValues (:hasLabeledValues)
+
+SubDataPropertyOf(:hasLabeledValues owl:topDataProperty)
+FunctionalDataProperty(:hasLabeledValues)
+
+# Data Property: :hasReinforcementFunction (:hasReinforcementFunction)
+
+SubDataPropertyOf(:hasReinforcementFunction owl:topDataProperty)
+FunctionalDataProperty(:hasReinforcementFunction)
+
+# Data Property: :hasSize (:hasSize)
+
+SubDataPropertyOf(:hasSize owl:topDataProperty)
+FunctionalDataProperty(:hasSize)
+
+
+
+############################
+#   Classes
+############################
+
+# Class: :AlgorithmA_LS_UL (:AlgorithmA_LS_UL)
+
+EquivalentClasses(:AlgorithmA_LS_UL ObjectIntersectionOf(:ConcreteAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :LargeSample) ObjectAllValuesFrom(:hasSample :LargeSample)) ObjectSomeValuesFrom(:hasSample DataHasValue(:hasLabeledValues "false"^^xsd:boolean)) ObjectSomeValuesFrom(:hasSample DataHasValue(:hasReinforcementFunction "false"^^xsd:boolean)) ObjectAllValuesFrom(:hasSample DataHasValue(:hasLabeledValues "false"^^xsd:boolean)) ObjectAllValuesFrom(:hasSample DataHasValue(:hasReinforcementFunction "false"^^xsd:boolean))))
+
+# Class: :AlgorithmB_MS (:AlgorithmB_MS)
+
+EquivalentClasses(:AlgorithmB_MS ObjectIntersectionOf(:ConcreteAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :MediumSample) ObjectAllValuesFrom(:hasSample :MediumSample))))
+
+# Class: :AlgorithmByLearningModel (:AlgorithmByLearningModel)
+
+SubClassOf(:AlgorithmByLearningModel :Algorithm)
+DisjointUnion(:AlgorithmByLearningModel :ReinforcementLearningAlgorithm :SupervisedLearningAlgorithm :UnsupervisedLearningAlgorithm)
+
+# Class: :AlgorithmBySize (:AlgorithmBySize)
+
+SubClassOf(:AlgorithmBySize :Algorithm)
+DisjointUnion(:AlgorithmBySize :LargeSampleAlgorithm :MediumSampleAlgorithm :SmallSampleAlgorithm)
+
+# Class: :AlgorithmC_SMS (:AlgorithmC_SMS)
+
+EquivalentClasses(:AlgorithmC_SMS ObjectIntersectionOf(:ConcreteAlgorithm ObjectUnionOf(ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :MediumSample) ObjectAllValuesFrom(:hasSample :MediumSample)) ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :SmallSample) ObjectAllValuesFrom(:hasSample :SmallSample)))))
+
+# Class: :AlgorithmD_LS_RL (:AlgorithmD_LS_RL)
+
+EquivalentClasses(:AlgorithmD_LS_RL ObjectIntersectionOf(:ConcreteAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :LargeSample) ObjectAllValuesFrom(:hasSample :LargeSample)) ObjectSomeValuesFrom(:hasSample DataHasValue(:hasLabeledValues "false"^^xsd:boolean)) ObjectSomeValuesFrom(:hasSample DataHasValue(:hasReinforcementFunction "true"^^xsd:boolean)) ObjectAllValuesFrom(:hasSample DataHasValue(:hasLabeledValues "false"^^xsd:boolean)) ObjectAllValuesFrom(:hasSample DataHasValue(:hasReinforcementFunction "true"^^xsd:boolean))))
+
+# Class: :ConcreteAlgorithm (:ConcreteAlgorithm)
+
+EquivalentClasses(:ConcreteAlgorithm :Solution)
+SubClassOf(:ConcreteAlgorithm :Algorithm)
+
+# Class: :LargeSample (:LargeSample)
+
+EquivalentClasses(:LargeSample DataSomeValuesFrom(:hasSize DatatypeRestriction(xsd:integer xsd:minExclusive "1000000"^^xsd:integer)))
+SubClassOf(:LargeSample :SampleBySize)
+
+# Class: :LargeSampleAlgorithm (:LargeSampleAlgorithm)
+
+EquivalentClasses(:LargeSampleAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :LargeSample) ObjectAllValuesFrom(:hasSample :LargeSample)))
+SubClassOf(:LargeSampleAlgorithm :AlgorithmBySize)
+
+# Class: :MediumSample (:MediumSample)
+
+EquivalentClasses(:MediumSample DataSomeValuesFrom(:hasSize DatatypeRestriction(xsd:integer xsd:minExclusive "1000"^^xsd:integer xsd:maxInclusive "100000"^^xsd:integer)))
+SubClassOf(:MediumSample :SampleBySize)
+
+# Class: :MediumSampleAlgorithm (:MediumSampleAlgorithm)
+
+EquivalentClasses(:MediumSampleAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :MediumSample) ObjectAllValuesFrom(:hasSample :MediumSample)))
+SubClassOf(:MediumSampleAlgorithm :AlgorithmBySize)
+
+# Class: :ReinforcementLearningAlgorithm (:ReinforcementLearningAlgorithm)
+
+EquivalentClasses(:ReinforcementLearningAlgorithm ObjectSomeValuesFrom(:hasSample ObjectIntersectionOf(DataHasValue(:hasLabeledValues "false"^^xsd:boolean) DataHasValue(:hasReinforcementFunction "true"^^xsd:boolean))))
+SubClassOf(:ReinforcementLearningAlgorithm :AlgorithmByLearningModel)
+
+# Class: :SampleBySize (:SampleBySize)
+
+SubClassOf(:SampleBySize :Sample)
+DisjointUnion(:SampleBySize :LargeSample :MediumSample :SmallSample)
+
+# Class: :SmallSample (:SmallSample)
+
+EquivalentClasses(:SmallSample DataSomeValuesFrom(:hasSize DatatypeRestriction(xsd:integer xsd:maxInclusive "1000"^^xsd:integer)))
+SubClassOf(:SmallSample :SampleBySize)
+
+# Class: :SmallSampleAlgorithm (:SmallSampleAlgorithm)
+
+EquivalentClasses(:SmallSampleAlgorithm ObjectIntersectionOf(ObjectSomeValuesFrom(:hasSample :SmallSample) ObjectAllValuesFrom(:hasSample :SmallSample)))
+SubClassOf(:SmallSampleAlgorithm :AlgorithmBySize)
+
+# Class: :SupervisedLearningAlgorithm (:SupervisedLearningAlgorithm)
+
+EquivalentClasses(:SupervisedLearningAlgorithm ObjectSomeValuesFrom(:hasSample ObjectIntersectionOf(DataHasValue(:hasLabeledValues "true"^^xsd:boolean) DataHasValue(:hasReinforcementFunction "false"^^xsd:boolean))))
+SubClassOf(:SupervisedLearningAlgorithm :AlgorithmByLearningModel)
+
+# Class: :UnsupervisedLearningAlgorithm (:UnsupervisedLearningAlgorithm)
+
+EquivalentClasses(:UnsupervisedLearningAlgorithm ObjectSomeValuesFrom(:hasSample ObjectIntersectionOf(DataHasValue(:hasLabeledValues "false"^^xsd:boolean) DataHasValue(:hasReinforcementFunction "false"^^xsd:boolean))))
+SubClassOf(:UnsupervisedLearningAlgorithm :AlgorithmByLearningModel)
+
+
+############################
+#   Named Individuals
+############################
+
+# Individual: :largeSample (:largeSample)
+
+DataPropertyAssertion(:hasLabeledValues :largeSample "false"^^xsd:boolean)
+DataPropertyAssertion(:hasReinforcementFunction :largeSample "true"^^xsd:boolean)
+DataPropertyAssertion(:hasSize :largeSample "10000000"^^xsd:integer)
+
+# Individual: :mediumSample (:mediumSample)
+
+DataPropertyAssertion(:hasSize :mediumSample "10000"^^xsd:integer)
+
+# Individual: :smallSample (:smallSample)
+
+DataPropertyAssertion(:hasSize :smallSample "100"^^xsd:integer)
+
+# Individual: :solutionForLargeSample (:solutionForLargeSample)
+
+ClassAssertion(:Solution :solutionForLargeSample)
+ObjectPropertyAssertion(:hasSample :solutionForLargeSample :largeSample)
+
+# Individual: :solutionForMediumSample (:solutionForMediumSample)
+
+ClassAssertion(:Solution :solutionForMediumSample)
+ObjectPropertyAssertion(:hasSample :solutionForMediumSample :mediumSample)
+
+# Individual: :solutionForSmallSample (:solutionForSmallSample)
+
+ClassAssertion(:Solution :solutionForSmallSample)
+ObjectPropertyAssertion(:hasSample :solutionForSmallSample :smallSample)
+
+
+DisjointClasses(:LargeSample :MediumSample :SmallSample)
+DisjointClasses(:LargeSampleAlgorithm :MediumSampleAlgorithm :SmallSampleAlgorithm)
+DisjointClasses(:ReinforcementLearningAlgorithm :SupervisedLearningAlgorithm :UnsupervisedLearningAlgorithm)
+)
